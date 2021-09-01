@@ -2,7 +2,7 @@ import store from '../store';
 var token = '';
 
 const defaultSetting = {};
-defaultSetting.mainHostUrl = "http://backend.test/api/";
+defaultSetting.mainHostUrl = "";
 
 defaultSetting.requestHeader = {
     Accept: "application/json",

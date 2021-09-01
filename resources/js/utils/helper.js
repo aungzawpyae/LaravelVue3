@@ -290,12 +290,12 @@ const flashErrorMessage = async (error, messageList, callback) => {
 const getErrorMessage = (error, messageList) => {
     
     let showErrorMessage = '';
-     // Servier ဘက်က resonse error အပိုင်း
-     if (error.response) {
+    
+    if (error.response) {
         let errors = error.response.data.errors;
 
         if (errors) { // server validation error (422)
-            // ပထမဦးဆုံး တခုကို ယူ
+            
             let key = Object.keys(errors)[0];
 
             showErrorMessage = errors[key][0];
@@ -311,7 +311,6 @@ const getErrorMessage = (error, messageList) => {
             showErrorMessage = errors;
         }
     } else {
-        // ရိုးရိုး error အပိုင်း
 
         if (error && Array.isArray(error)) {
             
@@ -319,7 +318,7 @@ const getErrorMessage = (error, messageList) => {
 
             showErrorMessage = `${getLangMessage(errorKeys[0], messageList)} ${getLangMessage(error[errorKeys[0]], messageList)}`;
 
-        } else if (typeof error === "object") { // validate.js ကလာတဲ့ error 
+        } else if (typeof error === "object") {
 
             let errorKeys = Object.keys(error); 
 
@@ -332,10 +331,7 @@ const getErrorMessage = (error, messageList) => {
 
             console.log('tag', errorKeys);
 
-            // ပထမဦီးဆုံးတခုကို ယူ
             let errorKey = errorKeys[0];
-
-            // key က dot နဲ့လာမရင် eg . sender.phone နောက်က phone ကိုဘဲယူ
 
             let keyList = errorKey.split(".");
 
