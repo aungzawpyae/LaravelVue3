@@ -12,12 +12,14 @@
 		                	class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-300 border-0 pt-7"
 		                >
 		                    <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
-		                        <form>
+		                        <form @submit.prevent="login">
 		                            <div class="relative w-full mb-3">
 		                                <label 
 		                                	class="block uppercase text-gray-700 text-xs font-bold mb-2" 
 		                                	for="username"
-		                                >Email</label>
+		                                >
+		                            		Uesrname
+		                            	</label>
 		                                <input 
 		                                	type="text"
 		                                	id="username"
@@ -28,22 +30,6 @@
 		                                	style="transition: all 0.15s ease 0s;"
 		                                >
 		                            </div>
-
-		                            <!-- <div class="relative w-full mb-3">
-		                                <label 
-		                                	class="block uppercase text-gray-700 text-xs font-bold mb-2" 
-		                                	for="password"
-		                                >Password</label>
-	                                	<input 
-	                                		type="password" 
-	                                		id="password"
-		                                	name="password"
-	                                		class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full" 
-	                                		placeholder="Password"
-	                                		v-model="form.password"  
-	                                		style="transition: all 0.15s ease 0s;"
-	                                	>
-		                            </div> -->
 
 		                            <div class="relative w-full mb-3">
 									    <label 
@@ -87,10 +73,9 @@
 
 		                            <div class="text-center mt-6">
 		                                <button 
-		                                	class="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full" 
-		                                	type="button" 
+		                                	class="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
+		                                	type="submit"
 		                                	style="transition: all 0.15s ease 0s;"
-		                                	@click="login"
 		                                >Sign In</button>
 		                            </div>
 		                        </form>
@@ -129,11 +114,21 @@
 			}
 		},
 		methods:{
+			// login(){
+			// 	this.$store.dispatch('auth/login', this.createPayload())
+			// 	.then( response => {
+			// 		//console.log("success");
+			// 		console.log("log", this.$router.push({name: 'index'}))
+			// 		this.$router.push({name: 'index'});
+			// 	}).catch(error => {
+			// 		helper.flashErrorMessage(error);
+			// 	})
+			// },
+
 			login(){
-				this.$store.dispatch('auth/login', this.createPayload())
+				Api.poster("api/login", this.createPayload())
 				.then( response => {
-					//console.log("success");
-					console.log("log", this.$router.push({name: 'index'}))
+					this.$store.dispatch('auth/set_user', response.data);
 					this.$router.push({name: 'index'});
 				}).catch(error => {
 					helper.flashErrorMessage(error);

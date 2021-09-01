@@ -15,36 +15,26 @@ router.beforeEach(async (to, from, next) => {
 
 	let active_user = store ? store.state.auth.user : null;
 
-	// Login မဝင်ရသေးရင်
     if (
         to.matched.some((m) => m.meta.auth) &&
         !helper.castBool(store.state.auth.auth)
     ) {
-        //! store.state.auth.authenticated
-        /*
-         * If the user is not authenticated and visits
-         * a page that requires authentication, redirect to the login page
-         */
         next({
-            name: "login" //redo set login
+            name: "login"
         });
-    } else if ( // login ဝင်ပြီးရင်
+    } else if (
         to.matched.some((m) => m.meta.guest) &&
         helper.castBool(store.state.auth.auth)
     ) {
-        /*
-         * If the user is authenticated and visits
-         * an guest page, redirect to the dashboard page
-         */
         next({
-            path: "/"
+            name: "index"
         });
     } else if (
         !helper.checkPermissionForRoute(
             to.name,
             to.params ? to.params.tab : undefined,
         ) && //if invalid permission
-        !helper.isGlobalRoute(to) && //if not global route
+        !helper.isGlobalRoute(to) &&
         !helper.isGuestRoute(to)
     ) {
         next({
