@@ -16,25 +16,25 @@ router.beforeEach(async (to, from, next) => {
 	let active_user = store ? store.state.auth.user : null;
 
     if (
-        to.matched.some((m) => m.meta.auth) &&
-        !helper.castBool(store.state.auth.auth)
+        to.matched.some((m) => m.meta.guest) &&
+        store.state.auth.auth
     ) {
         next({
-            name: "login"
+            path: "/login"
         });
     } else if (
-        to.matched.some((m) => m.meta.guest) &&
+        to.matched.some((m) => m.meta.auth) &&
         helper.castBool(store.state.auth.auth)
     ) {
         next({
-            name: "index"
+            path: "//"
         });
     } else if (
         !helper.checkPermissionForRoute(
             to.name,
             to.params ? to.params.tab : undefined,
         ) && //if invalid permission
-        !helper.isGlobalRoute(to) &&
+        !helper.isGlobalRoute(to) && 
         !helper.isGuestRoute(to)
     ) {
         next({

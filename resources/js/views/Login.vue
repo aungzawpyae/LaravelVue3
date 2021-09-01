@@ -114,22 +114,13 @@
 			}
 		},
 		methods:{
-			// login(){
-			// 	this.$store.dispatch('auth/login', this.createPayload())
-			// 	.then( response => {
-			// 		//console.log("success");
-			// 		console.log("log", this.$router.push({name: 'index'}))
-			// 		this.$router.push({name: 'index'});
-			// 	}).catch(error => {
-			// 		helper.flashErrorMessage(error);
-			// 	})
-			// },
 
 			login(){
 				Api.poster("api/login", this.createPayload())
 				.then( response => {
 					this.$store.dispatch('auth/set_user', response.data);
 					this.$router.push({name: 'index'});
+
 				}).catch(error => {
 					helper.flashErrorMessage(error);
 				})
