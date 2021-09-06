@@ -22,6 +22,9 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->json('phone')->nullable();
             $table->unsignedBigInteger('role_id');
+            $table->boolean('ban')->default(false);
+            $table->unsignedBigInteger('banned_by')->nullable();
+            $table->unsignedBigInteger('deleted_by')->nullable();
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();

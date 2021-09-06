@@ -9,6 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use App\Models\Role;
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
@@ -50,5 +52,10 @@ class User extends Authenticatable
     public function revokeTokens($name)
     {
         $this->tokens()->where('name', $name)->update(['revoked' => true]);
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
     }
 }
